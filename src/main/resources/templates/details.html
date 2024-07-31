@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main.html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div layout:fragment="site_content">
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col-6 offset-3">
+                    <div class="form-group">
+                        <label th:text="#{label.name}"></label>
+                        <input type="text" class="form-control plain-text" th:value="${item!=null?item.name:''}">
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{label.price}"></label>
+                        <input type="number" class="form-control plain-text" min="0" th:value="${item!=null?item.price:'0'}">
+                    </div>
+                    <div class="form-group">
+                        <label th:text="#{label.amount}"></label>
+                        <input type="number" class="form-control plain-text" th:value="${item!=null?item.amount:'0'}">
+                    </div>
+                    <div class="form-group">
+                        <label th:text = "#{label.country}">
+                        </label>
+                        <input type="text" class="form-control plain-text" th:value="${item!=null?item.country.name:''}">
+                    </div>
+                    <div class="form-group">
+                        <a th:href="@{'/edititem/' + ${item.id}}" class="btn btn-success" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')" th:text="#{button.edit}"></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-6 offset-2">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr th:each="cat : ${item.categories}">
+                            <td th:text="${cat.name}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</html>
